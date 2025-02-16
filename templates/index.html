@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QRコード生成</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        h2 {
+            color: #333;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="text"] {
+            padding: 8px;
+            margin: 5px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+        .qr-container {
+            margin-top: 20px;
+        }
+        img {
+            border: 2px solid #333;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>QRコードを作成</h2>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+    <form method="POST" action="/">
+        <label for="qr_data">QRコードの内容</label>
+        <input type="text" id="qr_data" name="qr_data" required>
+        
+        <button type="submit" id="generateBtn">QRコードを生成</button>
+    </form>
+
+    {% if qr_code %}
+    <div class="qr-container">
+        <h3>生成されたQRコード</h3>
+        <img src="data:image/png;base64,{{ qr_code }}" alt="QRコード">
+        <br>
+        <a href="/download">
+            <button type="button">QRコードをダウンロード</button>
+        </a>
+    </div>
+    {% endif %}
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            console.log("✅ JavaScript がロードされました！");
+        
+            const form = document.querySelector("form");
+            if (!form) {
+                console.error("❌ フォームが見つかりません！");
+                return;
+            }
+        
+            form.addEventListener("submit", function(event) {
+                console.log("✅ フォームの submit イベントが発生しました！");
+            });
+        });
+    </script>
+</body>
+</html>
